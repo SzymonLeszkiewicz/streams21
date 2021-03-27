@@ -36,3 +36,10 @@ def diff_between(currency):
         print("Spread for ", i)
         print(spread, '%')
         sleep(5)
+
+off_dis(waluty)
+while 1:
+    try:
+        diff_between(waluty)
+    except:
+        print("Connection Error")
