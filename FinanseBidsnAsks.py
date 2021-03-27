@@ -31,15 +31,15 @@ def off_dis(currency):
 
 def diff_between(currency):
     for i in currency:
-        ask, bid = asknbid(i)
-        spread = round(100 - (1 - (ask - bid) / bid) * 100, 4)
-        print("Spread for ", i)
-        print(spread, '%')
-        sleep(5)
+        try:
+            ask, bid = asknbid(i)
+            spread = round(100 - (1 - (ask - bid) / bid) * 100, 4)
+            print("Spread for ", i)
+            print(spread, '%')
+            sleep(5)
+        except:
+            print("Connection Error")
 
 off_dis(waluty)
 while 1:
-    try:
-        diff_between(waluty)
-    except:
-        print("Connection Error")
+    diff_between(waluty)
