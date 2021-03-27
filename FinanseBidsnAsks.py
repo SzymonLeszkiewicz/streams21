@@ -18,4 +18,15 @@ def asknbid(w):
     b = response.json()['bid']
     return a, b
 
-print(asknbid(waluty[0]))
+def off_dis(currency):
+    for i in currency:
+        try:
+            a, b = asknbid(i)
+            print('Offers for: ', i, '(prices in dollars)')
+            print('ask: ', a)
+            print('bid: ', b)
+            sleep(5)
+        except:
+            print("Connection Error")
+
+off_dis(waluty)
