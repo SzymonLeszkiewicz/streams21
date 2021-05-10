@@ -11,11 +11,14 @@ import random
 inc = [[], [], []]
 dec = [[], [], []]
 
+
 def m(a):
     return (sum(a) + 1) / (len(a) + 1)
 
+
 def test_con(url):
     return requests.get(url).ok
+
 
 def calc_rsi(t, da, ia, bhist):
     x = y = 1
@@ -27,7 +30,7 @@ def calc_rsi(t, da, ia, bhist):
             da.append(l)
         x = m(ia)
         y = m(da)
-    return 100 - (100 / (1 + (x +1/ y+1)))
+    return 100 - (100 / (1 + (x + 1 / y + 1)))
 
 
 def vol_calc(cur, t):
@@ -89,23 +92,26 @@ def animate(i):
     for i, ax in enumerate(axs):
         axs[i].cla()
         pointers[i].cla()
+        axs[2].set_xlabel("time")
+
         vol[i].append(vol_calc(f'{w[i]}-PLN', 100))
         avg[i].append(mean(oferts_list[2 * i][-avg_section:] + oferts_list[2 * i + 1][-avg_section:]))
 
         rsi[i].append(calc_rsi(rsi_section, dec[i], inc[i], oferts_list[2 * i + 1]))
-
+        axs[1].set_ylabel("value")
         axs[i].plot(czas[-5:], oferts_list[2 * i], label=w[i] + ' asks')
         axs[i].plot(czas[-5:], oferts_list[2 * i + 1], label=w[i] + ' bids')
         axs[i].plot(czas[-5:], avg[i][-5:], label='avg')
         axs[i].legend(loc='upper left')
-
-        axs[i].set_title(w[i])
+        # axs[i].set_title(w[i])
         if choice == 'vol':
             pointers[i].bar(czas[-5:], vol[i][-5:], width=0.2, label="vol", color='silver')
             pointers[i].legend(loc='lower left')
+            pointers[1].set_ylabel("volume value")
         else:
             pointers[i].plot(czas[-5:], rsi[i][-5:], color='red', label=f'{w[i]} RSI')
             pointers[i].legend(loc='lower left')
+            pointers[1].set_ylabel("RSI value")
 
 
 ani = FuncAnimation(fig, animate, interval=1000)
